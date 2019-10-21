@@ -1,0 +1,1 @@
+C:\Data\Projekty-Moje\Bricks\buildSrc\plugin2\build\classes\kotlin\main\Plugin2$apply$$inlined$run$lambda$1$1.class;C:\Data\Projekty-Moje\Bricks\buildSrc\plugin2\build\classes\kotlin\main\Plugin2$apply$$inlined$run$lambda$1.class;C:\Data\Projekty-Moje\Bricks\buildSrc\plugin2\build\classes\kotlin\main\Plugin2.class
