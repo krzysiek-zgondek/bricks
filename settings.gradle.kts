@@ -1,3 +1,3 @@
-include(":samples", ":layout")
+include(":samples", ":layout", ":core")
 
 rootProject.name = "Bricks"
