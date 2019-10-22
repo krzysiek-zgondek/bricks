@@ -6,9 +6,6 @@ plugins{
     `maven-publish`
 }
 
-group = "com.source.bricks"
-version = "0.0"
-
 tasks.register<Jar>("sourcesJar") {
     from(sourceSets.main.get().allJava)
     archiveClassifier.set("sources")

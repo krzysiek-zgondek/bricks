@@ -21,4 +21,7 @@ allprojects {
         google()
         jcenter()
     }
+
+    group = "com.source.bricks"
+    version = "0.0"
 }
