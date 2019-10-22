@@ -6,7 +6,7 @@
 /.idea/workspace.xml
 /.idea/libraries
 .DS_Store
-/build
+build/
 /captures
 /.idea
 gradlew.bat
