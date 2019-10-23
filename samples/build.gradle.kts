@@ -1,21 +1,21 @@
 plugins{
-    id("com.android.application")
+    id("com.android.library")
     kotlin("android")
     kotlin("android.extensions")
 }
 
-
 android {
     compileSdkVersion(29)
     buildToolsVersion = "29.0.2"
+
     defaultConfig {
-        applicationId = "com.source.bricks"
         minSdkVersion (21)
         targetSdkVersion (29)
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
@@ -33,3 +33,5 @@ dependencies {
     androidTestImplementation("androidx.test:runner:1.2.0")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0")
 }
+
+apply(from = "../gradle/publishing/publish_android.gradle.kts")

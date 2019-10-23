@@ -2,16 +2,23 @@ apply(plugin = "org.gradle.maven-publish")
 
 tasks.register<Jar>("sourcesJar") {
     dependsOn("classes")
-    from(components["java"])
-    archiveClassifier.set("sources")
+
+    project.the<SourceSetContainer>().named("main"){
+        from(allJava)
+        archiveClassifier.set("sources")
+    }
 }
 
 configure<PublishingExtension>() {
     publications {
         register("mavenJava", MavenPublication::class) {
-            artifactId = project.name
             from(components["java"])
             artifact(tasks["sourcesJar"])
+            artifactId = project.name
         }
+
+        //todo pom
     }
 }
+
+
