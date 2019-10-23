@@ -3,5 +3,10 @@ plugins{
 }
 
 rootProject.dependencies {
-    runtime(project(path))
+    runtime (project(path))
+}
+
+dependencies{
+    compileOnly(gradleApi())
+    compileOnly(kotlin("gradle-plugin"))
 }
