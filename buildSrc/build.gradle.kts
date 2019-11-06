@@ -1,13 +1,8 @@
 buildscript {
-    repositories {
-        google()
-        jcenter()
-    }
+    apply(from = "../gradle/dependencies/default_repositories.gradle.kts")
+
 }
 
 allprojects {
-    repositories {
-        google()
-        jcenter()
-    }
+    apply(from = "${rootProject.rootDir}/../gradle/dependencies/default_repositories.gradle.kts")
 }

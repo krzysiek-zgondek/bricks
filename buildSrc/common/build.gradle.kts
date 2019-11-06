@@ -1,23 +1,17 @@
-plugins{
+plugins {
     `kotlin-dsl`
 }
 
-buildscript{
-    repositories{
-        google()
-        jcenter()
-    }
-    dependencies{
-        classpath("com.android.tools.build:gradle:3.5.0")
-    }
+buildscript {
+    apply(from = "../../gradle/dependencies/android_gradle_plugin.gradle.kts")
 }
 
 rootProject.dependencies {
-    runtime (project(path))
+    runtime(project(path))
 }
 
-dependencies{
+dependencies {
     compileOnly(gradleApi())
-    compile(kotlin("gradle-plugin"))
-    compile("com.android.tools.build:gradle:3.5.0")
+    implementation(kotlin("gradle-plugin"))
+    implementation("com.android.tools.build:gradle:${project.extra["buildToolVersion"]}")
 }

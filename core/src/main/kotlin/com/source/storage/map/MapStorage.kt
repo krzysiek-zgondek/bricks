@@ -9,11 +9,11 @@ class MapStorage<Id, Type>(
     private val storage: MutableMap<Id, Type>
 ) : Storage<Id, Type> {
 
-    override fun get(index: Id): Type? {
+    override operator fun get(index: Id): Type? {
         return storage[index]
     }
 
-    override fun set(index: Id, value: Type) {
+    override operator fun set(index: Id, value: Type) {
         storage[index] = value
     }
 }

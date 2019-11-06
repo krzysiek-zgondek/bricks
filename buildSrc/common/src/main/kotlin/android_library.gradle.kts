@@ -1,10 +1,13 @@
+import com.android.build.gradle.LibraryExtension
+
 plugins{
     id("com.android.library")
     kotlin("android")
     kotlin("android.extensions")
 }
 
-android {
+
+configure<LibraryExtension> {
     compileSdkVersion(29)
     buildToolsVersion = "29.0.2"
 
@@ -25,8 +28,8 @@ android {
 }
 
 dependencies {
-    implementation(kotlin("stdlib"))
-    testImplementation("junit:junit:4.12")
-    androidTestImplementation("androidx.test:runner:1.2.0")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0")
+    "implementation"(kotlin("stdlib"))
+    "testImplementation"("junit:junit:4.12")
+    "androidTestImplementation"("androidx.test:runner:1.2.0")
+    "androidTestImplementation"("androidx.test.espresso:espresso-core:3.2.0")
 }

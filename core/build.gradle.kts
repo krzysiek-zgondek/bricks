@@ -1,17 +1,11 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
-plugins{
+plugins {
     id("library")
     id("kotlin")
 }
 
-dependencies{
+dependencies {
     compileOnly(gradleApi())
+    implementation("junit:junit:4.12")
 }
 
 apply(from = "../gradle/publishing/publish.gradle.kts")
-
-val compileKotlin: KotlinCompile by tasks
-compileKotlin.kotlinOptions {
-    freeCompilerArgs = listOf("-XXLanguage:+InlineClasses")
-}

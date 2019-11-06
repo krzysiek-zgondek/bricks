@@ -5,28 +5,16 @@ plugins {
 apply(from = "gradle/versioning/versioning.gradle.kts")
 
 buildscript {
-    repositories {
-        google()
-        jcenter()
-        maven {
-            url = uri("https://plugins.gradle.org/m2/")
-        }
+    apply(from = "gradle/dependencies/android_gradle_plugin.gradle.kts")
+    apply(from = "gradle/dependencies/android_maven_publish.gradle.kts")
 
-    }
     dependencies {
-        classpath("com.android.tools.build:gradle:3.5.0")
-        classpath("digital.wup:android-maven-publish:3.6.2")
         classpath(kotlin("gradle-plugin"))
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
     }
 }
 
 allprojects {
-    repositories {
-        google()
-        jcenter()
-    }
+    apply(from = "${rootProject.rootDir}/gradle/dependencies/default_repositories.gradle.kts")
 
     group = "com.source.bricks"
     version = `version-full`
