@@ -10,7 +10,9 @@ buildscript {
 
     dependencies {
         classpath(kotlin("gradle-plugin"))
+        classpath("org.jetbrains.kotlinx:atomicfu-gradle-plugin:0.14.1")
     }
+
 }
 
 allprojects {

@@ -2,6 +2,7 @@ package com.source.bricks
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.com.source.resource.source.bricks.R
 
 class MainActivity : AppCompatActivity() {
 

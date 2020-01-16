@@ -1,5 +1,9 @@
 package com.source.provider
 
+import kotlinx.coroutines.CoroutineScope
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
+
 /**
  * @project Bricks
  * @author SourceOne on 26.10.2019
@@ -38,13 +42,13 @@ inline operator fun <Input, Output> ((Input) -> Output).get(input: Input): Outpu
 /**
  * Creates simplest provider
  * */
-inline fun <Id, Type1, Type2> provider(
-    crossinline init: (Id) -> Type1?,
-    crossinline next: (Id, Type1?) -> Type2
+inline fun <Id, Type1, Type2> provide(
+    crossinline init: (Id) -> Type1,
+    crossinline next: (Id, Type1) -> Type2
 ): (Id) -> Type2 {
     return { input: Id ->
         val first = init(input)
-        execute(input, first, next)
+        next(input, first)
     }
 }
 
@@ -54,17 +58,16 @@ inline fun <Id, Type1, Type2> provider(
  * [init] - creates initial value for [Id] input
  * [next] - provides value that depends on [Id] input
  * and receives value returned by [init] invocation
- * [regular provider][regular]
  *
  * */
-inline fun <Id, Type1, Type2, Context> provider(
+inline fun <Id, Type1, Type2, Context> provide(
     context: Context,
-    crossinline init: Context.(Id) -> Type1?,
-    crossinline next: Context.(Id, Type1?) -> Type2
+    crossinline init: Context.(Id) -> Type1,
+    crossinline next: Context.(Id, Type1) -> Type2
 ): (Id) -> Type2 {
     return { input: Id ->
         val first = init(context, input)
-        execute(input, context, first, next)
+        next(context, input, first)
     }
 }
 
@@ -82,44 +85,28 @@ inline fun <Id, Type1, Type2, Context> provider(
  * [exit] block do not modify output of [init] block
  *
  * */
-inline fun <Id, Type1, Type2, Context> provider(
-    context: Context,
-    crossinline init: Context.(Id) -> Type1,
-    crossinline next: Context.(Id, Type1) -> Type2,
-    crossinline exit: Context.(Id, Type1, Type2) -> Unit
-): Provider<Id, Type2> {
-    return Provider { input: Id ->
-        val first = init(context, input)
-        execute(input, context, first, next).also { result ->
-            exit(context, input, first, result)
-        }
+
+
+object Async
+
+inline fun <Id, Type1, Type2> Async.provide(
+    crossinline init: suspend (Id) -> Type1,
+    crossinline next: suspend (Id, Type1) -> Type2
+): suspend (Id) -> Type2 {
+    return { input: Id ->
+        val first = init(input)
+        next(input, first)
     }
 }
 
-/**
- * Inlines [next] with specified values [input], [init]
- *
- * */
-@PublishedApi
-internal inline fun <Id, Type1, Type2> execute(
-    input: Id,
-    init: Type1,
-    crossinline next: (Id, Type1) -> Type2
-): Type2 {
-    return next(input, init)
+inline fun <Id, Type1, Type2, Context> Async.provide(
+    context: Context,
+    crossinline init: suspend Context.(Id) -> Type1,
+    crossinline next: suspend Context.(Id, Type1) -> Type2
+): suspend (Id) -> Type2 {
+    return { input: Id ->
+        val first = init(context,input)
+        next(context, input, first)
+    }
 }
 
-/**
- * Inlines [next] with specified values [input], [init]
- * and wraps it with [context] object
- *
- * */
-@PublishedApi
-internal inline fun <Id, Type1, Type2, Context> execute(
-    input: Id,
-    context: Context,
-    init: Type1,
-    crossinline next: Context.(Id, Type1) -> Type2
-): Type2 {
-    return next(context, input, init)
-}

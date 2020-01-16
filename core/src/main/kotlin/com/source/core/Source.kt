@@ -12,10 +12,14 @@ inline class Source<out Type>(
     @PublishedApi
     internal val path: () -> Type
 ) {
-
     /**
      * Executes definition declared when constructing the [Source] instance
      * */
     @Suppress("NOTHING_TO_INLINE")
     inline fun get(): Type = path()
+
+    @Suppress("NOTHING_TO_INLINE")
+    inline operator fun unaryMinus(): Type {
+        return get()
+    }
 }

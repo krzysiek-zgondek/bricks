@@ -12,12 +12,12 @@ sealed class Resource<Type> {
     /**
      * Represents successfully created data of type [Type]
      * */
-    class Data<Type>(inline val value: Type) : Resource<Type>()
+    data class Data<Type>(inline val value: Type) : Resource<Type>()
 
     /**
      * Represents exception thrown while creating data of type [Type]
      * */
-    class Error<Type>(inline val value: Throwable) : Resource<Type>()
+    data class Error<Type>(inline val value: Throwable) : Resource<Type>()
 
     companion object {
         /**
@@ -48,5 +48,18 @@ inline fun <Type> resource(declaration: () -> Type): Resource<Type> {
         Resource.result(declaration())
     } catch (exception: Exception) {
         Resource.error(exception)
+    }
+}
+
+/**
+ * Transforms [Resource] of type [T] to type [R]
+ * If resource is of type [Resource.Data] it will contain object
+ * transformed by [transformation], if it is [Resource.Error] it
+ * only copies [Resource.Error.value]
+ * */
+inline fun <T, R> Resource<T>.map(transformation: (T) -> R): Resource<R> {
+    return when (this) {
+        is Resource.Data -> Resource.result(transformation(value))
+        is Resource.Error -> Resource.error(value)
     }
 }

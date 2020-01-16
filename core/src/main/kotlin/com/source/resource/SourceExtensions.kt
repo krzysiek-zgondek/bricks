@@ -12,12 +12,26 @@ import com.source.core.Source
  * */
 @Suppress("NOTHING_TO_INLINE")
 inline fun <Type> Resource.Companion.from(source: Source<Type>): Resource<Type> {
-    return try {
-        result(source.get())
-    } catch (exception: Exception) {
-        error(exception)
+    return resource {
+        source.get()
     }
 }
+
+/**
+ * Creates a resource of type [T] directly from source
+ * and executes transformation on that source
+ * */
+@Suppress("NOTHING_TO_INLINE")
+inline fun <T, R> Resource.Companion.from(
+    source: Source<T>,
+    transformation: (T) -> R
+): Resource<R> {
+    return resource {
+        val result = source.get()
+        transformation(result)
+    }
+}
+
 
 /**
  * Creates a resource of type [Type] from a source declaration
