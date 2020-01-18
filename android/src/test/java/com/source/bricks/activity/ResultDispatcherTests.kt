@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.launchActivity
+import com.source.bricks.activity.dispatch.ResultDispatch
+import com.source.bricks.activity.dispatch.buildResultDispatcher
 import common.addTestActivities
 import org.junit.Assert
 import org.junit.Before
@@ -26,14 +28,19 @@ class ResultActivity : AppCompatActivity()
 class ReceivingActivity : AppCompatActivity() {
     lateinit var dispatched: ResultDispatch
 
-    private val dispatcher = buildResultDispatcher {
-        add { dispatch -> dispatched = dispatch }
-    }
+    private val dispatcher =
+        buildResultDispatcher {
+            add { dispatch -> dispatched = dispatch }
+        }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         dispatcher.dispatch {
-            ResultDispatch(requestCode, resultCode, data)
+            ResultDispatch(
+                requestCode,
+                resultCode,
+                data
+            )
         }
     }
 
@@ -61,7 +68,11 @@ class ResultDispatcherTests {
 
     @Test
     fun `start activity for result and check if results were provided`() {
-        val expected = ResultDispatch(10001, Activity.RESULT_OK, null)
+        val expected = ResultDispatch(
+            10001,
+            Activity.RESULT_OK,
+            null
+        )
 
         scenario.onActivity { activity ->
             activity.startResultActivity()

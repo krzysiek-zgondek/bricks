@@ -1,4 +1,4 @@
-package com.source.bricks.activity
+package com.source.bricks.activity.dispatch
 
 import com.source.core.dispatcher.Dispatcher
 
@@ -7,6 +7,9 @@ import com.source.core.dispatcher.Dispatcher
  * */
 typealias ResultDispatcher = Dispatcher<ResultDispatch>
 
+/**
+ * Dispatcher builder
+ * */
 inline fun buildResultDispatcher(body: Dispatcher.Builder<ResultDispatch>.() -> Unit): ResultDispatcher {
     return Dispatcher.Builder.build(body)
 }

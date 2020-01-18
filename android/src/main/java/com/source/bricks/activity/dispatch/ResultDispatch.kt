@@ -1,4 +1,4 @@
-package com.source.bricks.activity
+package com.source.bricks.activity.dispatch
 
 import android.content.Intent
 
