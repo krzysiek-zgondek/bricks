@@ -23,9 +23,9 @@ import org.robolectric.annotation.Config
  * @project Bricks
  */
 
-class ResultActivity : AppCompatActivity()
+class ResultActivity : Activity()
 
-class ReceivingActivity : AppCompatActivity() {
+class ReceivingActivity : Activity() {
     lateinit var dispatched: ResultDispatch
 
     private val dispatcher =

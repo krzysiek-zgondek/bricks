@@ -11,7 +11,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.core.app.launchActivity
 import com.source.bricks.activity.argument.argument
 import com.source.bricks.activity.argument.arguments
-import com.source.bricks.activity.intent.intentFor
+import com.source.bricks.intent.intentFor
 import common.addTestActivities
 import kotlinx.android.parcel.Parcelize
 import org.junit.Assert
@@ -59,7 +59,7 @@ class DirectArgumentActivity : Activity() {
 
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [Build.VERSION_CODES.P])
-class ArgumentTest {
+class ActivityArgumentTest {
     lateinit var scenario: ActivityScenario<DirectArgumentActivity>
 
     @Before

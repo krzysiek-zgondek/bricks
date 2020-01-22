@@ -1,16 +1,20 @@
 package com.source.bricks.activity.argument
 
-import android.app.Activity
 import android.content.Intent
-import com.source.bricks.activity.intent.extraSet
-import com.source.core.argument.Argument
 
 /**
  * This scope enables setting arguments for activity's intent with simple [set] method
  * */
-class ActivityArgumentScope(val intent: Intent){
-    fun <Type> Argument<Activity, Type>.set(value: Type) {
-        intent.extraSet(name, value)
+class ActivityArgumentScope(val intent: Intent) {
+    /*Future notes
+    * when inline classes become stable make this class inline as well
+    * */
+
+    /**
+     * Saves value into intent using provided [ActivityArgument] description
+     * */
+    inline fun <reified Type> ActivityArgument<Type>.set(value: Type) {
+        encoder(intent, name, value)
     }
 }
 
