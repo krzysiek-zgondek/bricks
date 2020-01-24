@@ -1,4 +1,4 @@
-package com.source.bricks.activity
+package com.source.bricks.fragment
 
 import android.content.Context
 import android.content.Intent
@@ -40,11 +40,12 @@ class FragmentArgumentTestActivity : FragmentActivity() {
 
         companion object {
             fun getInstance(): ArgumentTestFragment {
-                return ArgumentTestFragment().apply {
-                    text = "test"
-                    serial = Serial(1, "test")
-                    parcel = Parcel(1, "test")
-                }
+                return ArgumentTestFragment()
+                    .apply {
+                        text = "test"
+                        serial = Serial(1, "test")
+                        parcel = Parcel(1, "test")
+                    }
             }
         }
     }
@@ -53,7 +54,7 @@ class FragmentArgumentTestActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if(savedInstanceState == null){
+        if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction().run {
                 add(ArgumentTestFragment.getInstance(), null)
             }.commit()
@@ -93,8 +94,18 @@ class FragmentArgumentTest {
             activity.supportFragmentManager.executePendingTransactions()
             Assert.assertEquals("test", activity.testFragment.text)
             Assert.assertNotEquals("test2", activity.testFragment.text)
-            Assert.assertEquals(FragmentArgumentTestActivity.Serial(1, "test"), activity.testFragment.serial)
-            Assert.assertEquals(FragmentArgumentTestActivity.Parcel(1, "test"), activity.testFragment.parcel)
+            Assert.assertEquals(
+                FragmentArgumentTestActivity.Serial(
+                    1,
+                    "test"
+                ), activity.testFragment.serial
+            )
+            Assert.assertEquals(
+                FragmentArgumentTestActivity.Parcel(
+                    1,
+                    "test"
+                ), activity.testFragment.parcel
+            )
         }
     }
 
@@ -110,7 +121,11 @@ class FragmentArgumentTest {
     fun `change argument and check if value was properly stored`() {
         scenario.onActivity { activity ->
             activity.testFragment.text = "test 2"
-            Assert.assertEquals("value should be changed right away", "test 2", activity.testFragment.text)
+            Assert.assertEquals(
+                "value should be changed right away",
+                "test 2",
+                activity.testFragment.text
+            )
         }
 
         scenario.recreate()

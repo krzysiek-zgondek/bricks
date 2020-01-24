@@ -13,7 +13,8 @@ import kotlin.reflect.KClass
  */
 
 /**Adds activities to packageManager and enables them to
- * be started without declaring them in AndroidManifest.xml*/
+ * be started without declaring them in AndroidManifest.xml
+ * */
 fun addTestActivities(vararg activities: KClass<out Activity>) {
     val app = ApplicationProvider.getApplicationContext<Context>()
     val shadowPackageManager = Shadows.shadowOf(app.packageManager)

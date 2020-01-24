@@ -34,6 +34,8 @@ dependencies {
     implementation("androidx.core:core-ktx:1.1.0")
     implementation("androidx.fragment:fragment-ktx:1.1.0")
     implementation("androidx.constraintlayout:constraintlayout:1.1.3")
+
+    testImplementation(kotlin("reflect", embeddedKotlinVersion))
 }
 
 apply(from = "../gradle/publishing/publish_android.gradle.kts")

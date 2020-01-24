@@ -1,4 +1,4 @@
-package com.source.bricks.fragment.manager
+package com.source.bricks.fragment.manager.observer
 
 import androidx.fragment.app.FragmentManager
 
