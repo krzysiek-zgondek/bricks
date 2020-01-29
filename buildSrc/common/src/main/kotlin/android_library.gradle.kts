@@ -37,5 +37,6 @@ dependencies {
     "testImplementation"("org.robolectric:robolectric:4.3.1")
     "testImplementation"("androidx.test:core:1.2.0")
     "testImplementation"("androidx.test:core-ktx:1.2.0")
-
+    "testImplementation"("androidx.arch.core:core-testing:2.1.0")
+    "testImplementation"("org.mockito:mockito-core:3.0.0")
 }

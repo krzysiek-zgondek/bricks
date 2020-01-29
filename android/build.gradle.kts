@@ -34,7 +34,8 @@ dependencies {
     implementation("androidx.core:core-ktx:1.1.0")
     implementation("androidx.fragment:fragment-ktx:1.1.0")
     implementation("androidx.constraintlayout:constraintlayout:1.1.3")
-
+    implementation("androidx.lifecycle:lifecycle-livedata:2.2.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.2.0")
     testImplementation(kotlin("reflect", embeddedKotlinVersion))
 }
 

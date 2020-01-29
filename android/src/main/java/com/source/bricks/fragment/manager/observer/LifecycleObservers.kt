@@ -21,7 +21,7 @@ inline fun <reified T : Fragment> FragmentManager.registerActiveObserver(
     registerFragmentLifecycleCallbacks(callbacks, recursive)
 }
 
-inline fun <reified T : Fragment> FragmentManager.registerDestroyObserver(
+inline fun <reified T : Fragment> FragmentManager.registerInActiveObserver(
     tag: String? = T::class.java.name, recursive: Boolean = false, crossinline receiver: (T) -> Unit
 ) {
     val callbacks = object : FragmentManager.FragmentLifecycleCallbacks() {
