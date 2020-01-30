@@ -11,6 +11,8 @@ import java.io.Serializable
 
 /*
 * Default implementation of how to save any data of type [Type] into [Bundle]
+*
+* This implementation covers most use cases. This should / will be more expanded as need.
 * */
 inline fun <reified Type> defaultBundleEncoder(bundle: Bundle, key: String, value: Type) {
     when (value) {
