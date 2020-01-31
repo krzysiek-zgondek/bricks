@@ -26,8 +26,7 @@ internal inline fun <reified Type> createArgumentProvider(
     crossinline encoder: (Intent, String, Type) -> Unit = ::defaultArgumentEncoder,
     crossinline default: () -> Type
 ): ActivityArgumentProvider<Type> {
-    return object :
-        ActivityArgumentProvider<Type> {
+    return object : ActivityArgumentProvider<Type> {
         override fun provideDelegate(
             ref: Any, prop: KProperty<*>
         ): ReadOnlyProperty<Any, ActivityArgument<Type>> {
