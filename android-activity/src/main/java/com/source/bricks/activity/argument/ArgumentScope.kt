@@ -38,6 +38,6 @@ inline fun <reified Type> Intent.set(argument: ActivityArgument<Type>, value: Ty
 /**
  * Gets argument's value using intent directly
  * */
-inline fun <reified Type> Intent.get(argument: ActivityArgument<Type>, value: Type): Type? {
+inline fun <reified Type> Intent.get(argument: ActivityArgument<Type>): Type? {
     return argument.decoder(this, argument.name)
 }
