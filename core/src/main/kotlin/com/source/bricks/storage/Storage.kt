@@ -1,4 +1,4 @@
-package com.source.storage
+package com.source.bricks.storage
 
 /**
  * Storage interface

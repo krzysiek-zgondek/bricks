@@ -1,6 +1,6 @@
-package com.source.storage.map
+package com.source.bricks.storage.map
 
-import com.source.storage.Storage
+import com.source.bricks.storage.Storage
 
 /**
  * Class which exposes every type of [Map] as [Storage]

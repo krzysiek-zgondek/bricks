@@ -1,6 +1,6 @@
-package com.source.storage.list
+package com.source.bricks.storage.list
 
-import com.source.storage.Storage
+import com.source.bricks.storage.Storage
 
 /**
  * Class which exposes every type of [MutableList] as [Storage]

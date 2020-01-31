@@ -3,8 +3,8 @@ package com.source.cache
 import com.source.indexable.indexedvalue.IndexedValue
 import com.source.indexable.indexedvalue.index
 import com.source.provider.provide
-import com.source.storage.Storage
-import com.source.storage.map.hashMapStorage
+import com.source.bricks.storage.Storage
+import com.source.bricks.storage.map.hashMapStorage
 import kotlinx.coroutines.CoroutineScope
 
 /**
