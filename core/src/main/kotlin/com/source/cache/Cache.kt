@@ -64,45 +64,7 @@ inline fun <Id, Type> cache(
     return object : CacheStore<Id, Type>(storage) {
         override operator fun set(id: Id, value: Type) {
             if (!discriminator(value.index(id)))
-                storage[id] = value
+                super.set(id, value)
         }
     }
-}
-
-
-/**
- * Uses [cache] and wraps it with a provider implementation.
- * Uses [CacheStore.unaryPlus] in combination with [provider]
- * to store elements in the [cache]
- *
- * */
-inline fun <Id, Type> provider(
-    cache: CacheStore<Id, Type>,
-    crossinline provider: (Id) -> Type
-): (Id) -> Type {
-    return provide(
-        context = cache,
-        init = { input: Id -> storage[input] },
-        next = { input, cached ->
-            cached ?: +provider(input).index(input)
-        }
-    )
-}
-
-/**
- * Uses [cache] and wraps it with a provider implementation.
- * Uses [CacheStore.unaryPlus] in combination with [provider]
- * to store elements in the [cache]
- *
- * */
-inline fun <Id, Type> provider(
-    crossinline provider: (Id) -> Type
-): (Id) -> Type {
-    return provide(
-        context = cache<Id, Type>(),
-        init = { input: Id -> storage[input] },
-        next = { input, cached ->
-            cached ?: +provider(input).index(input)
-        }
-    )
 }

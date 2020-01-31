@@ -1,6 +1,6 @@
 package com.source.resource
 
-import com.source.core.Source
+import com.source.bricks.Source
 
 /**
  * @project Bricks

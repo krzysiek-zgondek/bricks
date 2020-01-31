@@ -1,5 +1,7 @@
 package com.source.generics
 
+import com.source.bricks.generics.BrickType
+import com.source.bricks.generics.toType
 import org.junit.Test
 
 /**
@@ -31,9 +33,9 @@ class BrickTypeTest {
 
     @Test
     fun `1 layer generics`() {
-        val base = type<String>()
-        val same = type<String>()
-        val different = type<Int>()
+        val base = com.source.bricks.generics.type<String>()
+        val same = com.source.bricks.generics.type<String>()
+        val different = com.source.bricks.generics.type<Int>()
 
         assert(base == base) { "same instance should be equal" }
         assert(base == same) { "same underlying type should be equal" }
@@ -42,9 +44,9 @@ class BrickTypeTest {
 
     @Test
     fun `2 layers generics`() {
-        val base = type<HashSet<String>>()
-        val same = type<HashSet<String>>()
-        val different = type<HashSet<Int>>()
+        val base = com.source.bricks.generics.type<HashSet<String>>()
+        val same = com.source.bricks.generics.type<HashSet<String>>()
+        val different = com.source.bricks.generics.type<HashSet<Int>>()
 
         assert(base == base) { "same instance should be equal" }
         assert(base == same) { "same underlying type should be equal" }
@@ -53,13 +55,13 @@ class BrickTypeTest {
 
     @Test
     fun `mixed generics`() {
-        val type1 = type<List<HashSet<String>>>()
-        val type1copy = type<List<HashSet<String>>>()
-        val type2 = type<HashSet<String>>()
-        val type2copy = type<HashSet<String>>()
-        val type3 = type<List<String>>()
-        val type3copy = type<List<String>>()
-        val type4 = type<String>()
+        val type1 = com.source.bricks.generics.type<List<HashSet<String>>>()
+        val type1copy = com.source.bricks.generics.type<List<HashSet<String>>>()
+        val type2 = com.source.bricks.generics.type<HashSet<String>>()
+        val type2copy = com.source.bricks.generics.type<HashSet<String>>()
+        val type3 = com.source.bricks.generics.type<List<String>>()
+        val type3copy = com.source.bricks.generics.type<List<String>>()
+        val type4 = com.source.bricks.generics.type<String>()
 
         assert(type1 == type1copy) { "same underlying type should be equal" }
         assert(type2 == type2copy) { "same underlying type should be equal" }

@@ -29,14 +29,9 @@ configure<LibraryExtension> {
 
 dependencies {
     "implementation"(kotlin("stdlib"))
+
     "testImplementation"("junit:junit:4.12")
 
     "androidTestImplementation"("androidx.test.ext:junit:1.1.1")
     "androidTestImplementation"("androidx.test.espresso:espresso-core:3.2.0")
-
-    "testImplementation"("org.robolectric:robolectric:4.3.1")
-    "testImplementation"("androidx.test:core:1.2.0")
-    "testImplementation"("androidx.test:core-ktx:1.2.0")
-    "testImplementation"("androidx.arch.core:core-testing:2.1.0")
-    "testImplementation"("org.mockito:mockito-core:3.0.0")
 }
