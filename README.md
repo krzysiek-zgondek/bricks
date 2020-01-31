@@ -4,4 +4,4 @@
 
 Foundation elements for app development
 
-Currently my efforts are to collect most of the code i'm using and recycle from project to project.
+Currently my efforts are to collect most of the code i'm using and recycling from project to project.
