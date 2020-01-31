@@ -3,6 +3,7 @@ plugins{
 }
 
 android{
+
     testOptions {
         unitTests.isIncludeAndroidResources = true
     }
