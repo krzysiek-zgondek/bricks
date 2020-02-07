@@ -4,7 +4,7 @@ tasks.register<Jar>("sourcesJar") {
     dependsOn("classes")
 
     project.the<SourceSetContainer>().named("main"){
-        from(java.srcDirs)
+        from(allSource)
         archiveClassifier.set("sources")
     }
 }

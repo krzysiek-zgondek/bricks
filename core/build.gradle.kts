@@ -5,6 +5,11 @@ plugins {
     id("kotlin")
 }
 
+sourceSets {
+    main {
+        java.srcDir("src/main/kotlin")
+    }
+}
 
 dependencies {
     compileOnly(gradleApi())

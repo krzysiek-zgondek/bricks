@@ -24,6 +24,11 @@ configure<LibraryExtension> {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+
+    sourceSets["main"].java.apply{
+        srcDir("src/main/kotlin")
+        include("**/*.kt")
+    }
 }
 
 dependencies {
