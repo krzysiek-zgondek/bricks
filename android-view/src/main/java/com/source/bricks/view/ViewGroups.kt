@@ -112,8 +112,28 @@ inline fun <T : ViewGroup> T.findFirst(condition: (View) -> Boolean): View? {
 /**
  * Applies [receiver] to result of [ViewGroup.findViewById]
  * if view was found or does nothing.
+ * If the type [T] doesn't match the type found it throws [ClassCastException]
+ *
+ * @see onViewByIdChecked for the implementation which doesn't throw if different type is found
+ *
+ * @throws ClassCastException
+ * @return provided [ViewGroup]
  * */
 inline fun <T : View> ViewGroup.onViewById(@IdRes id: Int, receiver: T.() -> Unit): ViewGroup {
     findViewById<T>(id)?.apply(receiver)
+    return this
+}
+
+
+/**
+ * Like [onViewById] it looks for first instance of view with corresponding id, but it also checks
+ * if type correct. If not it looks deeper into hierarchy until view is found or do nothing.
+ * Uses [findFirstRecursive] to find corresponding view
+ *
+ * @return provided [ViewGroup]
+ * */
+inline fun <reified T : View> ViewGroup.onViewByIdChecked(@IdRes id: Int, receiver: T.() -> Unit): ViewGroup {
+    val view = findFirstRecursive { view -> view.id == id && view is T } as? T
+    view?.receiver()
     return this
 }
