@@ -30,7 +30,7 @@ configure<LibraryExtension> {
 
     sourceSets["main"].java.apply {
         srcDir("src/main/kotlin")
-        include("**/*.kt")
+//        include("**/*.kt")
     }
 
     libraryVariants.all {
