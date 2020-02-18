@@ -1,6 +1,6 @@
 import com.android.build.gradle.LibraryExtension
 
-plugins{
+plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("android.extensions")
@@ -12,8 +12,8 @@ configure<LibraryExtension> {
     buildToolsVersion = "29.0.2"
 
     defaultConfig {
-        minSdkVersion (21)
-        targetSdkVersion (29)
+        minSdkVersion(21)
+        targetSdkVersion(29)
         versionCode = 1
         versionName = `version-full`
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -21,18 +21,21 @@ configure<LibraryExtension> {
 
     buildTypes {
         getByName("release") {
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 
-    sourceSets["main"].java.apply{
+    sourceSets["main"].java.apply {
         srcDir("src/main/kotlin")
         include("**/*.kt")
     }
 
-    libraryVariants.all{
-        generateBuildConfigProvider.configure {
-            enabled = false
+    libraryVariants.all {
+        this.generateBuildConfigProvider.configure {
+            this.enabled = false
         }
     }
 }
