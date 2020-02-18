@@ -7,7 +7,8 @@ include(
     ":android-resources",
     ":test",
     ":test-android",
-    ":core"
+    ":core",
+    ":koin-integrations"
 )
 
 rootProject.name = "Bricks"
