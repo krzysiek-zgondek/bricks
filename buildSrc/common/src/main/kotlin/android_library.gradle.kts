@@ -29,6 +29,12 @@ configure<LibraryExtension> {
         srcDir("src/main/kotlin")
         include("**/*.kt")
     }
+
+    libraryVariants.all{
+        generateBuildConfigProvider.configure {
+            enabled = false
+        }
+    }
 }
 
 dependencies {
