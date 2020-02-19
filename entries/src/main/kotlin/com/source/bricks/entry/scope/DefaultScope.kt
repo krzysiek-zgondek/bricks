@@ -12,6 +12,12 @@ import com.source.bricks.storage.Storage
 import com.source.bricks.storage.map.hashMapStorage
 
 
+/*
+* Future: SharedStorage integration
+* Future: Caching entries
+* Future: Observe entries changes [probably by observing storage]
+* */
+
 /**
  * Base implementation of [EntryScope].
  *
