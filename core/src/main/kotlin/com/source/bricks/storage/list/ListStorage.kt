@@ -8,6 +8,8 @@ import com.source.bricks.storage.Storage
 class ListStorage<Type>(
     private val storage: MutableList<Type>
 ) : Storage<Int, Type> {
+    override val entries: List<Int>
+        get() = storage.indices.toList()
 
     override fun get(index: Int): Type {
         return storage[index]
@@ -19,6 +21,10 @@ class ListStorage<Type>(
 
     override fun remove(id: Int): Type {
         return storage.removeAt(id)
+    }
+
+    override fun clear() {
+        storage.clear()
     }
 }
 

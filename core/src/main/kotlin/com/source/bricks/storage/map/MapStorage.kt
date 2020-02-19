@@ -8,6 +8,8 @@ import com.source.bricks.storage.Storage
 class MapStorage<Id, Type>(
     private val storage: MutableMap<Id, Type?>
 ) : Storage<Id, Type?> {
+    override val entries: List<Id>
+        get() = storage.keys.toList()
 
     override operator fun get(index: Id): Type? {
         return storage[index]
@@ -19,6 +21,10 @@ class MapStorage<Id, Type>(
 
     override fun remove(id: Id): Type? {
         return storage.remove(id)
+    }
+
+    override fun clear() {
+        storage.clear()
     }
 }
 
