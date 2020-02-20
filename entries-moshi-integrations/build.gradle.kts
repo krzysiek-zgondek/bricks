@@ -14,8 +14,10 @@ sourceSets {
 dependencies {
     compileOnly(gradleApi())
 
-    /*todo after moving all independent packages to it's own modules this should be moved also*/
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2")
+    implementation(project(":core"))
+    implementation(project(":entries"))
+    implementation("com.squareup.moshi:moshi:1.9.2")
+    implementation("com.squareup.moshi:moshi-kotlin:1.9.2")
 }
 
 apply(from = "../gradle/publishing/publish.gradle.kts")
