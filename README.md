@@ -18,7 +18,10 @@ again, don't hesitate, leave a BEEP here and share.
 
 Later on i will set up some kind of medium so that we can communicate
 but currently if you want to join this hassle, drop me an email at
+
 >krzysiek.zgondek@gmail.com.
+
+You can also leave BEEP message with pull request.
 
 ### BEEP - Bricks Evolution and Enhancement Process
 
@@ -34,15 +37,19 @@ Any module name is described by this template:
 * **platform** - is self explanatory, if code is platform independent
   then this is omitted
 * **group** - what the module is related to ie. activity, fragment, koin
-* **core** - used when code is frequently used in other modules in the group
-* **integrations** - used when code is related to other modules but
-  is either platform dependent or specific library dependent
+* **core** - used when code is frequently used in other modules in the
+  group
+* **integrations** - used when code is related to other modules but is
+  either platform dependent or specific library dependent
 
 ##### Version
+
 ```kotlin
 val bricksVersion = "0.2.0"  
- ```
+```
+
 by the way the version is meaningless, given the nature of this project
+
 ## Store
 
 
@@ -62,14 +69,69 @@ Our hardware store currently proudly contains:
   * `android-view` - scanning, easier operations
 
 ### Core
+
+Foundation for other modules. Defines all base structures. Mostly
+contains interfaces and basic structures
+
 ```kotlin
 implementation("com.github.krzysiek-zgondek.bricks:core:$bricksVersion")
- ```
+```
+
+#### Configuration
+Describes how to create and configure object.
+```kotlin
+interface Configuration<Context, Result> {
+    fun create(context: Context): Result
+}
+```
+Basic usage is shown in this example:
+```kotlin
+//definition
+//configuration that returns result
+val mainStorageConfiguration = configuration<Application, Storage> {
+    obtainStorageByName("main.storage")
+}
+
+//configuration that returns nothing
+val dbConfiguration = configuration<Application, Unit> {
+    configureLocalDB()
+}
+
+//...
+
+//usage
+fun someFunction(app: Application){
+    
+    val storage = mainStorageConfiguration.create(app)
+    val item = storage.get("image.png")
+}
+
+```
+You can also create configuration scopes to aggregate configurations:
+```kotlin
+//scope definition
+val DefaultScope by lazy {
+    ConfigurationListScope<Application>()
+}
+
+//configurations
+
+
+//usage
+fun someFunction(app: Application){
+    val storage = mainStorageConfiguration.create(app)
+    val item = storage.get("image.png")
+}
+
+```
+
 
 ### Entries
+
 ```kotlin
 implementation("com.github.krzysiek-zgondek.bricks:entries:$bricksVersion")
- ```
+```
+
 Todo descriptions
 
 
