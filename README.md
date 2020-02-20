@@ -78,13 +78,17 @@ implementation("com.github.krzysiek-zgondek.bricks:core:$bricksVersion")
 ```
 
 #### Configuration
+
 Describes how to create and configure object.
+
 ```kotlin
 interface Configuration<Context, Result> {
     fun create(context: Context): Result
 }
 ```
+
 Basic usage is shown in this example:
+
 ```kotlin
 //definition
 //configuration that returns result
@@ -100,18 +104,18 @@ val dbConfiguration = configuration<Application, Unit> {
 //...
 
 //usage
-fun someFunction(app: Application){
-    
+fun main(app: Application){
     val storage = mainStorageConfiguration.create(app)
     val item = storage.get("image.png")
 }
 
 ```
-You can also create configuration scopes to aggregate configurations and execute it at once:
-```kotlin
-//scope definition
-//file: SomeFile.kt
 
+You can also create configuration scopes to aggregate configurations and
+execute it at once:
+
+```kotlin
+//file: SomeFile.kt
 //scope definition
 val DefaultScope by lazy {
     ConfigurationListScope<Application>()
@@ -121,9 +125,24 @@ val DefaultScope by lazy {
 val dbConfiguration = configuration(DefaultScope) { println("db")/*...*/ }
 val firebaseConfiguration = configuration(DefaultScope) { println("fb")/*...*/ }
 val messagingConfiguration = configuration(DefaultScope) {println("msg") /*...*/ }
+```
 
+or:
+
+```kotlin
+//file: SomeFile.kt
+//scope definition
+val DefaultScope = ConfigurationListScope<Application>(
+    configuration { println("db")/*...*/ },
+    configuration { println("fb")/*...*/ },
+    configuration { println("msg") /*...*/ }
+)
+```
+
+then:
+
+```kotlin
 //other file
-
 class Application
 
 fun main(app: Application) {
@@ -132,6 +151,51 @@ fun main(app: Application) {
 }
 ```
 
+or if they are spread in different files (until gradle scan plugin is
+not written):
+
+```kotlin
+//somewhere in db module...
+val dbConfiguration = configuration<Application, Unit> { println("db")/*...*/ }
+//somewhere in firebase module...
+val firebaseConfiguration = configuration<Application, Unit> { println("fb")/*...*/ }
+//somewhere in messaging module...
+val messagingConfiguration = configuration<Application, Unit> { println("msg") /*...*/ }
+
+//otherfile.kt
+//scope definition
+val DefaultScope = ConfigurationListScope(
+    dbConfiguration, firebaseConfiguration, messagingConfiguration
+)
+
+class Application
+
+fun main(app: Application) {
+    //execute all configurations in the scope
+    DefaultScope.cofigure { app }
+}
+```
+
+> **TODO**
+> * Create Gradle task that scans for every Configuration interface
+>   implementation and packs created list so that all it can be force
+>   loaded to fill scopes on the fly.
+>
+>   ```kotlin
+>   //core module
+>   val DefaultScope = ConfigurationListScope<Application>()
+>
+>   //somewhere in db module...
+>   val dbConfiguration = configuration(DefaultScope){ println("db")/*...*/ }
+>
+>   //otherfile.kt
+>   class Application
+>
+>   fun main(app: Application) {
+>       //execute all configurations in the scope
+>       DefaultScope.configure { app }
+>   }
+>   ```
 
 
 ### Entries
