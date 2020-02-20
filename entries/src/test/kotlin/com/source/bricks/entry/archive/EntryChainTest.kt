@@ -43,7 +43,7 @@ class EntryChainTest {
         builder.build<Person>()
     }
 
-    @Test(expected = IllegalArgumentException::class)
+    @Test
     fun `chain builder output version is 0 for empty chain`() {
         val chain = EntryChain.Builder().build<Person>()
         assertEquals(0, chain.outputVersion)
