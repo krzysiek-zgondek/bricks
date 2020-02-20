@@ -17,7 +17,7 @@ import kotlin.reflect.KClass
  * @see EntryArchive.archiveOf
  * */
 class EntryChain<T> @PublishedApi internal constructor(
-    private val operations: List<EntryUpdate>
+    internal val operations: List<EntryUpdate>
 ) {
     /**
      * Chain's output version.

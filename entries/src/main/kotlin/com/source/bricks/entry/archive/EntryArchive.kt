@@ -11,7 +11,7 @@ package com.source.bricks.entry.archive
  * @see EntryChain
  * */
 class EntryArchive<T> @PublishedApi internal constructor(
-        private val chain: EntryChain<T>
+        internal val chain: EntryChain<T>
 ) {
     /**
      * Current version of [T]
