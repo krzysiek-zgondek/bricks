@@ -72,6 +72,12 @@ Our hardware store currently proudly contains:
   * `android-resources` - dimensions, display
   * `android-view` - scanning, easier operations
 
+
+#### Work in Progress
+
+Currently description is in progress so if you want more examples
+checkout source code and tests.
+
 ## Core
 
 Foundation for other modules. Defines all base structures. Mostly
@@ -238,6 +244,7 @@ currently there are two basic implementations:
 >    ```
 
 ## Entries
+
 Simple data usage. Abstract your models from how you store and retrieve
 them.
 
@@ -304,6 +311,7 @@ println(profile)
 ```
 
 #### Entry definitions
+
 Now let's say that ```Person``` class has changed.
 
 ```kotlin
@@ -320,6 +328,7 @@ data class Profile(
     val lastName: String
 )
 ```
+
 If you are using persistent data storage that means old data is stored
 in it. To recover entry from old state use entry definitions:
 
@@ -335,12 +344,16 @@ val profileDesc = define(
     }
 )
 ```
+
 now scope will be able to transform old data into new one:
+
 ```kotlin
 var profile by entry(userScope, profileDesc)
 println(profile)
 ```
+
 More advanced full example:
+
 ```kotlin
 
 /*file:Profile.kt*/
@@ -413,3 +426,53 @@ class Application {
     }
 }
 ```
+
+#### Scope Groups
+
+#### Storage
+
+#### Transcoders
+
+#### Loose examples
+
+```kotlin
+/*On the fly declaration*/
+class SomeClass(scope: EntryScope) {
+    /*Custom class*/
+    class CustomData
+
+    /*entry delegation*/
+    val customEntry = entry<CustomData>(scope)
+
+}
+
+/*Custom class*/
+class CustomData
+
+/*Custom entry descriptor, default value by kotlin new instance*/
+val CustomDataDescriptor = define<CustomData>()
+
+/*Custom entry descriptor, default value by object construction - use when no empty constructor is provided*/
+val CustomDataDescriptor2 = define { CustomData() }
+
+/*Custom entry descriptor, default value by empty constructor*/
+val CustomDataDescriptor3 = define(factory = ::CustomData)
+
+/*Custom scope*/
+class CustomScope : EntryScope by scope(transcoder = MoshiTranscoder()) {
+    /*One entry delegation per scope*/
+    val entry = register { CustomDataDescriptor }
+    val entry2 = register { define<Person>() }
+}
+
+/*Custom group*/
+class CustomScopeGroup : EntryScopeGroup by listedScopeGroup() {
+    val scope1 = register { CustomScope() }
+}
+```
+
+> **Future improvements**
+> * Observable entries
+> * Stable persistent storage
+> * Cached storage
+
