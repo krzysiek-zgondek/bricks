@@ -38,17 +38,21 @@ Any module name is described by this template:
 * **integrations** - used when code is related to other modules but
   is either platform dependent or specific library dependent
 
+##### Version
+```kotlin
+val bricksVersion = "0.2.0"  
+ ```
+by the way the version is meaningless, given the nature of this project
 ## Store
 
-```kotlin
-val bricksVersion = "0.1.2"  
- ```
 
 Our hardware store currently proudly contains:
 * General:
   * [`core`](#core) - base, configuration, tclass, storage
   * `koin-integrations` - koin configuration integration
   * `test` - small extensions
+* Data
+  * [`entires`](#entries) - delegation for any data you like
 * Android:
   * `android-core` - base, bundle, configuration, intent
   * `android-activity` - arguments
@@ -56,8 +60,6 @@ Our hardware store currently proudly contains:
   * `android-livedata` - observeOnce
   * `android-resources` - dimensions, display
   * `android-view` - scanning, easier operations
-* Data
-  * `entires` - delegation for any data you like
 
 ### Core
 ```kotlin
@@ -65,5 +67,9 @@ implementation("com.github.krzysiek-zgondek.bricks:core:$bricksVersion")
  ```
 
 ### Entries
-Entries module provides
+```kotlin
+implementation("com.github.krzysiek-zgondek.bricks:entries:$bricksVersion")
+ ```
+Todo descriptions
+
 
