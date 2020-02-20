@@ -11,7 +11,7 @@ import com.source.bricks.reflect.tClass
  * @param outputCls class that [apply] converts into
  * @param apply converts objects of class [inputCls] into class [outputCls]
  * */
-data class EntryUpdate(
+data class EntryUpdate @PublishedApi internal constructor(
     val version: Long,
     val inputCls: TClass<*>,
     val outputCls: TClass<*>,
@@ -19,10 +19,11 @@ data class EntryUpdate(
 )
 
 /**
- * Entry update factory
+ * EntryUpdate factory.
+ * Keeps [EntryUpdate.inputCls] and [EntryUpdate.outputCls] in sync with [operation]
  * */
 @Suppress("UNCHECKED_CAST")
-inline fun <reified T, reified R> entryUpdate(
+inline fun <reified T: Any, reified R: Any> entryUpdate(
     version: Long,
     noinline operation: (T) -> R
 ): EntryUpdate {

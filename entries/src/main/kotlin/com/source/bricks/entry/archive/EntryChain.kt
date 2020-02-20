@@ -1,7 +1,6 @@
 package com.source.bricks.entry.archive
 
-import com.source.bricks.reflect.TClass
-import com.source.bricks.reflect.tClass
+import com.source.bricks.entry.archive.EntryChain.Builder
 import kotlin.reflect.KClass
 
 
@@ -87,28 +86,7 @@ class EntryChain<T> @PublishedApi internal constructor(
             throwOnVersionDecrement(version)
             throwOnBrokenChain(In::class)
 
-            addNewOperation(version, In::class.tClass, Out::class.tClass, operation)
-        }
-
-        /**
-         * Creates and stores [EntryUpdate]
-         * */
-        @PublishedApi
-        internal fun <V1, V2 : Any> addNewOperation(
-            version: Long,
-            inputCls: TClass<V1>,
-            outputCls: TClass<V2>,
-            operation: (V1) -> V2
-        ) {
-            @Suppress("UNCHECKED_CAST")
-            val genericOperation = operation as (Any) -> Any
-
-            operations = operations + EntryUpdate(
-                version = version,
-                inputCls = inputCls,
-                outputCls = outputCls,
-                apply = genericOperation
-            )
+            operations = operations + entryUpdate(version, operation)
         }
 
         @PublishedApi
