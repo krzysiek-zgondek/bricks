@@ -107,23 +107,31 @@ fun someFunction(app: Application){
 }
 
 ```
-You can also create configuration scopes to aggregate configurations:
+You can also create configuration scopes to aggregate configurations and execute it at once:
 ```kotlin
+//scope definition
+//file: SomeFile.kt
+
 //scope definition
 val DefaultScope by lazy {
     ConfigurationListScope<Application>()
 }
 
-//configurations
+//define configurations
+val dbConfiguration = configuration(DefaultScope) { println("db")/*...*/ }
+val firebaseConfiguration = configuration(DefaultScope) { println("fb")/*...*/ }
+val messagingConfiguration = configuration(DefaultScope) {println("msg") /*...*/ }
 
+//other file
 
-//usage
-fun someFunction(app: Application){
-    val storage = mainStorageConfiguration.create(app)
-    val item = storage.get("image.png")
+class Application
+
+fun main(app: Application) {
+    //execute all configurations in the scope
+    DefaultScope.configure { app }
 }
-
 ```
+
 
 
 ### Entries
