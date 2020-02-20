@@ -50,8 +50,12 @@ val bricksVersion = "0.2.0"
 
 by the way the version is meaningless, given the nature of this project
 
-## Store
+### What's new in 0.2.0
 
+- New brick: [Entries](#entries) - Simplifies data usage
+- Partial documentation
+
+## Store
 
 Our hardware store currently proudly contains:
 * General:
@@ -68,7 +72,7 @@ Our hardware store currently proudly contains:
   * `android-resources` - dimensions, display
   * `android-view` - scanning, easier operations
 
-### Core
+## Core
 
 Foundation for other modules. Defines all base structures. Mostly
 contains interfaces and basic structures
@@ -176,7 +180,7 @@ fun main(app: Application) {
 }
 ```
 
-> **TODO**
+> **Future improvements**
 > * Create Gradle task that scans for every Configuration interface
 >   implementation and packs created list so that all it can be force
 >   loaded to fill scopes on the fly.
@@ -196,38 +200,216 @@ fun main(app: Application) {
 >       DefaultScope.configure { app }
 >   }
 >   ```
+
 #### KotlinReflect
-Contains small ```TClass``` wrapper for ```KClass``` - check source code KotlinReflect.kt
+
+Contains small ```TClass``` wrapper for ```KClass``` - check source code
+KotlinReflect.kt
+
 #### Storage
+
 Unified interface for library:
+
 ```kotlin
 interface Storage<Id, Type>
 ```
+
 currently there are two basic implementations:
+
 >    Lists:
+>
 >    ```kotlin
 >    //lists examples
 >    val list = listStorage<String>(
 >        list = mutableListOf()
 >    )
->    
+>
 >    //synchronized list
 >    val synchronized = listStorage<String>(
 >        list = Collections.synchronizedList(mutableListOf())
 >    )
 >    ```
+>
 >    Maps:
+>
 >    ```kotlin
 >    //maps
 >    val map = mapStorage<Any, Any>(map = hashMapOf())
 >    ```
 
-### Entries
+## Entries
+Simple data usage. Abstract your models from how you store and retrieve
+them.
+
+Start developing app
 
 ```kotlin
 implementation("com.github.krzysiek-zgondek.bricks:entries:$bricksVersion")
+implementation("com.github.krzysiek-zgondek.bricks:entries-moshi-integrations:$bricksVersion")
 ```
 
-Todo descriptions
+#### Usage
+
+Let's say you have ```Profile``` class for holding user data:
+
+```kotlin
+data class Profile(
+    val id: Long,
+    val name: String
+)
+```
+
+To use Entries you first have to define scope for them. Lets make a one
+for this crucial data:
+
+```kotlin
+//transcoder is used to mediate data type between storage and scopes
+//we will store data in Json
+val userScope = scope(transcoder = MoshiTranscoder())
+```
+
+Now once we have defined scope we can define our entry:
+
+```kotlin
+//our class have no default constructor so we use lambda factory
+val profile by entry(userScope){ 
+    Profile(id = 1000L, name = "John") 
+}
+```
+
+now lets use it:
+
+```kotlin
+val userScope = scope(transcoder = MoshiTranscoder())
+
+fun main() {
+    val profile by entry(userScope) {
+        Profile(id = 1000L, name = "John")
+    }
+
+    println(profile)
+}
+```
+
+it also can be modified:
+
+```kotlin
+//var instead of val
+var profile by entry(userScope) {
+    Profile(id = 1000L, name = "John")
+}
+
+profile = Profile(id = 500, name = "Renata")
+println(profile)
+```
+
+#### Entry definitions
+Now let's say that ```Person``` class has changed.
+
+```kotlin
+//old profile
+data class ProfileOld(
+    val id: Long,
+    val name: String
+)
+
+//new profile
+data class Profile(
+    val id: String,
+    val name: String,
+    val lastName: String
+)
+```
+If you are using persistent data storage that means old data is stored
+in it. To recover entry from old state use entry definitions:
+
+```kotlin
+val profileDesc = define(
+    factory = {
+        Profile(id = "1.2.3.4", name = "John", lastName = "Kowalski")
+    },
+    archive = archiveOf {
+        entry { old: ProfileOld ->
+            Profile(id = "${old.id}", name = old.name, lastName = "Kowalski")
+        }
+    }
+)
+```
+now scope will be able to transform old data into new one:
+```kotlin
+var profile by entry(userScope, profileDesc)
+println(profile)
+```
+More advanced full example:
+```kotlin
+
+/*file:Profile.kt*/
+//new profile
+data class Profile(
+    val id: String,
+    val name: String,
+    val lastName: String
+)
 
 
+/*file:ProfileEntry*/
+//oldest profile
+data class ProfileV1(
+    val id: Long
+)
+
+//old profile
+data class ProfileV2(
+    val id: Long,
+    val name: String
+)
+
+/*file:ProfileDescriptor.kt*/
+val profileDesc = define<Profile>(
+    archive = archiveOf {
+        entry { old: ProfileV1 ->
+            ProfileV2(id = old.id, name = "John")
+        }
+        entry { old: ProfileV2 ->
+            Profile(id = "${old.id}", name = old.name, lastName = "Kowalski")
+        }
+    }
+)
+
+/*file:ProfileService.kt*/
+class ProfileService{
+    fun requestProfile(): Profile{
+        /*emulate hard work*/
+        Thread.sleep(1000)
+        return Profile(id = "1.2.3.4", name = "John", lastName = "Kowalski")
+    }
+
+    fun logoff(): Profile{
+        /*emulate hard work*/
+        Thread.sleep(1000)
+        return Profile(id = "", name = "", lastName = "")
+    }
+}
+
+/*file:Application.kt*/
+class Application {
+    lateinit var service: ProfileService
+
+    private val userScope = scope(transcoder = MoshiTranscoder())
+
+    //entries are lazy by their delegation nature
+    private var profile by entry(userScope, profileDesc){
+        //this will be called once, only if entry is not already stored in the scope
+        service.requestProfile()
+    }
+
+    fun main() {
+        service = ProfileService()
+        //service will be invoke just once
+        println("current user is: $profile")
+
+        profile = service.logoff()
+        println("current user is: $profile")
+    }
+}
+```
