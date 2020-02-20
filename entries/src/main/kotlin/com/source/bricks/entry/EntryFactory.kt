@@ -107,23 +107,3 @@ internal inline fun <reified T> createEntry(
         }
     }
 }
-
-
-/**
- * Scoped version of [entry] factory method
- * */
-inline fun <reified T> EntryScope.register(): EntryProperty<T> {
-    return register() { define<T>() }
-}
-
-/**
- * Scoped version of [entry] factory method
- * */
-inline fun <reified T> EntryScope.register(
-    definition: () -> EntryDescriptor<out T>
-): EntryProperty<T> {
-    return entry(
-        scope = this,
-        descriptor = definition()
-    )
-}
