@@ -196,7 +196,31 @@ fun main(app: Application) {
 >       DefaultScope.configure { app }
 >   }
 >   ```
-
+#### KotlinReflect
+Contains small ```TClass``` wrapper for ```KClass``` - check source code KotlinReflect.kt
+#### Storage
+Unified interface for library:
+```kotlin
+interface Storage<Id, Type>
+```
+currently there are two basic implementations:
+>    Lists:
+>    ```kotlin
+>    //lists examples
+>    val list = listStorage<String>(
+>        list = mutableListOf()
+>    )
+>    
+>    //synchronized list
+>    val synchronized = listStorage<String>(
+>        list = Collections.synchronizedList(mutableListOf())
+>    )
+>    ```
+>    Maps:
+>    ```kotlin
+>    //maps
+>    val map = mapStorage<Any, Any>(map = hashMapOf())
+>    ```
 
 ### Entries
 
