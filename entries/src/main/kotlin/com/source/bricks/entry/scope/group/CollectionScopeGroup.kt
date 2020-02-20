@@ -1,10 +1,13 @@
-package com.source.bricks.entry.scope
+package com.source.bricks.entry.scope.group
+
+import com.source.bricks.entry.scope.EntryScope
 
 
 /**
  * Basic implementation of [EntryScopeGroup].
  * */
-class CollectionScopeGroup(private val scopes: MutableCollection<EntryScope>) : EntryScopeGroup {
+class CollectionScopeGroup(private val scopes: MutableCollection<EntryScope>) :
+    EntryScopeGroup {
     override fun add(scope: EntryScope) {
         scopes += scope
     }

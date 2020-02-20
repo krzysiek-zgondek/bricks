@@ -46,17 +46,24 @@ class DefaultScope<RawType>(
     /**
      * Obtains object from storage using [descriptor] key.
      * If stored object is older version of [T] then tries to recover it using [EntryDescriptor.archive]
+     * If stored object is newer version of [T] then throws [UnsupportedOperationException]
      * */
     override fun <T> get(descriptor: EntryDescriptor<out T>, cls: TClass<T>): T? {
         val key = EntryKey(descriptor.id)
         val entry = storage[key] ?: return null
         val rawValue = entry.data ?: return null
 
-        return if (entry.version < descriptor.archive.version) {
-            recoverFromHistoryOrThrow(key, entry, descriptor.archive)
+        return when {
+            entry.version < descriptor.archive.version -> {
+                recoverFromHistoryOrThrow(key, entry, descriptor.archive)
                     ?.also { updated -> set(descriptor, updated, cls) }
-        } else {
-            transcoder.decode(rawValue, cls)
+            }
+            entry.version == descriptor.archive.version -> {
+                transcoder.decode(rawValue, cls)
+            }
+            else -> {
+                throw UnsupportedOperationException("Cannot read older entry from new one")
+            }
         }
     }
 

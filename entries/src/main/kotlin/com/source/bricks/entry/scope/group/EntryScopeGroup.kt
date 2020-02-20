@@ -1,4 +1,6 @@
-package com.source.bricks.entry.scope
+package com.source.bricks.entry.scope.group
+
+import com.source.bricks.entry.scope.EntryScope
 
 interface EntryScopeGroup {
     /**

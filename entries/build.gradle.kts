@@ -16,7 +16,7 @@ dependencies {
 
     implementation(project(":core"))
 
-    implementation("org.koin:koin-core:2.0.1")
+    testImplementation(project(":test"))
 }
 
 apply(from = "../gradle/publishing/publish.gradle.kts")

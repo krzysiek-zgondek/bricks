@@ -1,8 +1,8 @@
 package com.source.bricks.entry.scope
 
+import com.source.bricks.entry.Entry
 import com.source.bricks.entry.EntryDescriptor
 import com.source.bricks.entry.EntryKey
-import com.source.bricks.entry.Entry
 import com.source.bricks.reflect.TClass
 
 
@@ -35,5 +35,4 @@ interface EntryScope {
      * */
     fun clear()
 }
-
 
