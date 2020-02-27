@@ -28,6 +28,7 @@ import java.io.Serializable
  * @project Bricks
  */
 
+/*todo add null checking*/
 class DirectArgumentActivity : Activity() {
     data class Serial(val value: Int, val text: String) : Serializable
     @Parcelize
