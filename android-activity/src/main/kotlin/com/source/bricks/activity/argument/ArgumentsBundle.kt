@@ -21,3 +21,15 @@ internal fun obtainArgumentsBundle(intent: Intent, name: String = BundleName): B
         newArguments
     }
 }
+
+/**
+ * Updates activity's arguments bundle
+ * */
+@PublishedApi
+internal fun updateArgumentsBundle(
+    intent: Intent,
+    bundle: Bundle,
+    name: String = BundleName
+) {
+    intent.putExtra(name, bundle)
+}
